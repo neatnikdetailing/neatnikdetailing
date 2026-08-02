@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neatnik Detailing</title>
+    <meta name="robots" content="noindex" />
+    <!--
+      SPA deep-link fallback for GitHub Pages.
+      Turns /gallery into /?/gallery so index.html (a real 200) loads;
+      a restore script there rewrites the clean URL back.
+      pathSegmentsToKeep = 0 keeps the custom domain at the root.
+      Based on https://github.com/rafgraph/spa-github-pages (MIT).
+
+      Static tools under /cms and /admin must NOT enter the SPA — if those
+      folders are missing, show a short message instead of a React Router miss.
+    -->
+    <script type="text/javascript">
+      var pathSegmentsToKeep = 0;
+      var l = window.location;
+      var rest = l.pathname
+        .slice(1)
+        .split("/")
+        .slice(pathSegmentsToKeep)
+        .join("/");
+      // OLD CODE - KEEP UNTIL CONFIRMED WORKING
+      // Always SPA-redirected every 404 (trapped /cms into React Router).
+      if (
+        rest === "cms" ||
+        rest.indexOf("cms/") === 0 ||
+        rest === "admin" ||
+        rest.indexOf("admin/") === 0
+      ) {
+        var home =
+          l.pathname
+            .split("/")
+            .slice(0, 1 + pathSegmentsToKeep)
+            .join("/") + "/";
+        document.documentElement.innerHTML =
+          "<head><meta charset=\"utf-8\"/><title>CMS</title></head>" +
+          "<body style=\"font-family:system-ui,sans-serif;background:#0a0a0a;color:#f5f5f4;padding:2rem\">" +
+          "<p>CMS files are not on this deploy yet.</p>" +
+          "<p>Redeploy so <code>cms/</code> ships with the site, then open the footer CMS link.</p>" +
+          "<p><a style=\"color:#c45c6a\" href=\"" +
+          home +
+          "\">Back to home</a></p>" +
+          "</body>";
+      } else {
+        l.replace(
+          l.protocol +
+            "//" +
+            l.hostname +
+            (l.port ? ":" + l.port : "") +
+            l.pathname
+              .split("/")
+              .slice(0, 1 + pathSegmentsToKeep)
+              .join("/") +
+            "/?/" +
+            rest.replace(/&/g, "~and~") +
+            (l.search
+              ? "&" + l.search.slice(1).replace(/&/g, "~and~")
+              : "") +
+            l.hash,
+        );
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

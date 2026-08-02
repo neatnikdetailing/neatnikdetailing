@@ -1,0 +1,23 @@
+{
+  "title": "Wildpeak × Hostile rims — gleaming",
+  "category": "Exterior",
+  "beforeLabel": "Dull chrome & road film",
+  "afterLabel": "Mirror shine, dressed rubber",
+  "order": 2,
+  "before": "before.jpg",
+  "before2": "747723319_4421328244756113_7264670401110696092_n.jpg",
+  "image": "after.jpg",
+  "image2": "747561044_969250486169449_6360309427744121092_n.jpg",
+  "fit": {
+    "before": null,
+    "before2": null,
+    "image": null,
+    "image2": {
+      "x": 50,
+      "y": 50,
+      "z": 1,
+      "r": 0,
+      "fh": true
+    }
+  }
+}

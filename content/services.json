@@ -1,0 +1,95 @@
+{
+  "packages": [
+    {
+      "title": "Interior Refresh",
+      "tagline": "Cabin cleaned the right way",
+      "description": "A thorough interior detail that pulls out the grit Maine roads leave behind — floors, seats, vents, and every spot you actually touch.",
+      "includes": [
+        "Full vacuum — carpets, mats, seats, trunk",
+        "Wipe-down of dash, console, and door panels",
+        "Window & mirror clean (interior)",
+        "Mat scrub and air-dry",
+        "Light leather or vinyl conditioning",
+        "Pet hair removal from fabrics and crevices"
+      ],
+      "startingAt": "$120",
+      "duration": "2–3 hrs",
+      "order": 1,
+      "id": "interior",
+      "mostRequested": false
+    },
+    {
+      "title": "Exterior Shine",
+      "tagline": "Paint that looks cared for",
+      "description": "Hand wash, careful decontamination, and a lasting finish so your vehicle looks sharp whether you’re headed to work or the lake.",
+      "includes": [
+        "Hand wash & rinse",
+        "Wheel & tire clean + dressing",
+        "Bug & tar spot treatment as needed",
+        "Clay bar when the paint needs it",
+        "Paint sealant or wax finish",
+        "Exterior glass polish"
+      ],
+      "startingAt": "$100",
+      "duration": "2–3 hrs",
+      "order": 2,
+      "id": "exterior",
+      "mostRequested": false
+    },
+    {
+      "title": "Full Neatnik Detail",
+      "tagline": "Inside and out, done right",
+      "description": "The complete treatment — interior and exterior together. Built for folks who want their vehicle looking like someone who takes pride in it actually owns it.",
+      "includes": [
+        "Everything in Interior Refresh",
+        "Everything in Exterior Shine",
+        "Engine bay wipe-down (as accessible)",
+        "Door jambs & fuel door detail",
+        "Exterior trim & plastic dressing",
+        "Final walkaround with you"
+      ],
+      "startingAt": "$200",
+      "duration": "4–6 hrs",
+      "order": 3,
+      "id": "full",
+      "mostRequested": true
+    }
+  ],
+  "addons": [
+    {
+      "title": "Headlight restoration",
+      "detail": "Clear up cloudy lenses so night driving feels safer again.",
+      "order": 1,
+      "id": "headlight-restoration"
+    },
+    {
+      "title": "Odor treatment",
+      "detail": "Deep clean focused on lingering smells — pets, smoke, or gym bag leftovers.",
+      "order": 2,
+      "id": "odor-treatment"
+    },
+    {
+      "title": "Engine bay wipe-down (as accessible)",
+      "detail": "A careful wipe-down of reachable engine bay surfaces.",
+      "order": 3,
+      "id": "engine-bay-wipe-down"
+    },
+    {
+      "title": "Paint protection boost",
+      "detail": "Extra sealant layer for longer gloss between details.",
+      "order": 4,
+      "id": "paint-protection-boost"
+    }
+  ],
+  "heroEyebrow": "Services",
+  "heroHeadline": "Detailing packages for real Maine vehicles",
+  "heroBody": "Salt, mud, kids, dogs, grocery runs — your car sees it all. These packages cover the standard detailing work that brings it back: vacuum, wash, protect, and polish the details that matter.",
+  "cta": {
+    "title": "Not sure which package fits?",
+    "body": "Describe your vehicle and what’s bothering you — salt film, pet hair, a dull exterior — and you’ll get a straightforward recommendation.",
+    "primaryLabel": "Request a quote",
+    "primaryHref": "/contact",
+    "secondaryLabel": "View packages",
+    "secondaryHref": "/services"
+  }
+}

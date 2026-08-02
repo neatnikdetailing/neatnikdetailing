@@ -1,0 +1,21 @@
+{
+  "email": "contact@neatnikdetailing.com",
+  "phoneDisplay": "(207) 660-1512",
+  "phoneTel": "+12076601512",
+  "location": "Fairfield, Maine",
+  "serviceAreas": [
+    "Fairfield",
+    "Waterville",
+    "Skowhegan",
+    "Oakland",
+    "Winslow",
+    "Clinton",
+    "Benton"
+  ],
+  "footerAreasBlurb": "Fairfield, ME and surrounding towns — Waterville, Skowhegan, Oakland, Winslow, and nearby.",
+  "heroEyebrow": "Contact",
+  "heroHeadline": "Book a detail or ask a question",
+  "heroBody": "Share a few details about your vehicle and what you’d like done. You’ll hear back with a clear quote and next steps.",
+  "heroHeadlineAttached": "Book {package}",
+  "heroBodyAttached": "Your package is attached below — add your details and we’ll follow up with a clear quote."
+}

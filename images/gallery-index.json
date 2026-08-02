@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-08-02T17:59:27.483Z",
+  "items": [
+    {
+      "id": "audi-a4-engine-bay",
+      "title": "Audi A4 — engine bay wipe-down",
+      "category": "Exterior",
+      "beforeLabel": "Heavy dust on covers & plastics",
+      "afterLabel": "Clean bay, deep black finish",
+      "beforeFile": "before.jpg",
+      "afterFile": "after.jpg",
+      "beforeFiles": [
+        "before.jpg"
+      ],
+      "afterFiles": [
+        "after.jpg"
+      ],
+      "beforeTone": "from-zinc-700 to-zinc-900",
+      "afterTone": "from-maroon-900 to-maroon-600"
+    },
+    {
+      "id": "wildpeak-hostile-rims",
+      "title": "Wildpeak × Hostile rims — gleaming",
+      "category": "Exterior",
+      "beforeLabel": "Dull chrome & road film",
+      "afterLabel": "Mirror shine, dressed rubber",
+      "beforeFile": "before.jpg",
+      "afterFile": "after.jpg",
+      "beforeFiles": [
+        "before.jpg"
+      ],
+      "afterFiles": [
+        "after.jpg"
+      ],
+      "beforeTone": "from-zinc-700 to-zinc-900",
+      "afterTone": "from-maroon-900 to-maroon-600"
+    }
+  ]
+}

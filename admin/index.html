@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Neatnik CMS</title>
+    <!-- OLD CODE - KEEP UNTIL CONFIRMED WORKING: CMS lived at /admin/ -->
+    <meta
+      http-equiv="refresh"
+      content="0; url=../cms/"
+    />
+    <link rel="canonical" href="../cms/" />
+    <script>
+      // Relative redirect so it works on any host / base path.
+      location.replace(
+        new URL("../cms/", location.href).href + (location.hash || "")
+      );
+    </script>
+  </head>
+  <body>
+    <p>
+      CMS moved to
+      <a href="../cms/">/cms/</a>.
+    </p>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+{
+  "hero": {
+    "eyebrow": "Fairfield, Maine",
+    "headline": "Neatnik",
+    "headlineAccent": "Detailing",
+    "body": "Family-owned car detailing in Fairfield, Maine — careful work, honest quotes, and a finish that doesn’t cut corners.",
+    "primaryCta": { "label": "Book a detail", "href": "/contact" },
+    "secondaryCta": { "label": "See the work", "href": "/gallery" },
+    "image": "images/interior.jpg"
+  },
+  "servicesIntro": {
+    "eyebrow": "Services",
+    "title": "Straight-ahead detailing done with care",
+    "body": "Interior, exterior, or the full treatment — vacuum, sprays, hand wash, and the finishing touches that make the difference.",
+    "footerNote": "Prices vary by vehicle size and condition.",
+    "linkLabel": "Full services page →"
+  },
+  "why": {
+    "eyebrow": "Why Neatnik",
+    "title": "Family-owned pride in every finish",
+    "body": "Neatnik isn’t a rush-through wash. It’s a family-owned detailing brand built on careful work, honest communication, and staying with the job until your vehicle looks genuinely good.",
+    "bullets": [
+      "Family-owned and locally rooted in Fairfield",
+      "No shortcuts on the steps that protect your paint and cabin",
+      "Clear communication before and after the detail",
+      "Serving Fairfield and the surrounding Mid-Maine towns"
+    ],
+    "linkLabel": "About Neatnik →",
+    "linkHref": "/about",
+    "image": "images/finish.jpg"
+  },
+  "galleryTeaser": {
+    "eyebrow": "Gallery",
+    "title": "Before & after",
+    "linkLabel": "Full gallery →"
+  },
+  "testimonialsEyebrow": "Word of mouth",
+  "testimonialsTitle": "What locals notice",
+  "testimonials": [
+    {
+      "quote": "They treated my truck like it was their own. Showed up on time, stayed until it was right, and the cabin still smelled clean a week later.",
+      "name": "Local customer",
+      "area": "Waterville area"
+    },
+    {
+      "quote": "I don’t trust just anybody with the family car. Neatnik was careful, honest about what it needed, and the results spoke for themselves.",
+      "name": "Local customer",
+      "area": "Fairfield"
+    },
+    {
+      "quote": "No rush job. You can tell Neatnik takes pride in the finish — exactly what you want when you’re paying for a real detail.",
+      "name": "Local customer",
+      "area": "Skowhegan area"
+    }
+  ],
+  "faqTitle": "Common questions",
+  "faq": [
+    {
+      "q": "How long does a detail take?",
+      "a": "Most interior or exterior packages run a few hours. A full detail can take half a day depending on the vehicle’s size and condition."
+    },
+    {
+      "q": "Do you come to me or do I drop off?",
+      "a": "Reach out and we’ll work out what makes sense for your schedule and location within the Fairfield service area."
+    },
+    {
+      "q": "Why don’t prices list exact totals?",
+      "a": "A compact sedan and a muddy truck aren’t the same job. You’ll get a clear quote once we know the vehicle and what you want done."
+    },
+    {
+      "q": "What products do you use?",
+      "a": "Quality detailing chemicals, towels, and tools suited to everyday Maine vehicles — nothing fancy for show, just what gets a lasting clean finish."
+    }
+  ],
+  "cta": {
+    "title": "Ready for a cleaner ride?",
+    "body": "Reach out with your vehicle type and what you’d like done. You’ll get a clear plan and a fair quote — no pressure, no guesswork.",
+    "primaryLabel": "Request a quote",
+    "primaryHref": "/contact",
+    "secondaryLabel": "View packages",
+    "secondaryHref": "/services"
+  }
+}

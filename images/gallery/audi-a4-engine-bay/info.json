@@ -1,0 +1,9 @@
+{
+  "title": "Audi A4 — engine bay wipe-down",
+  "category": "Exterior",
+  "beforeLabel": "Heavy dust on covers & plastics",
+  "afterLabel": "Clean bay, deep black finish",
+  "order": 1,
+  "before": "before.jpg",
+  "image": "after.jpg"
+}

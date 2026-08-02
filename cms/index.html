@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Neatnik Detailing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Outfit:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+      }
+      h1,
+      h2 {
+        font-family: "Outfit", system-ui, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+    <!--
+      Theme must load AFTER sveltia-cms.js — that bundle sets --sui-base-hue: 210
+      (blue) on :root. !important + JS re-apply keep Neatnik maroon in place.
+    -->
+    <style id="neatnik-cms-theme">
+      :root,
+      :host,
+      html,
+      body,
+      :root[data-theme],
+      :host[data-theme],
+      html[data-theme] {
+        --sui-base-hue: 351 !important;
+        --sui-primary-accent-color: #8b2e3c !important;
+        --sui-primary-accent-color-light: #b86f7d !important;
+        --sui-primary-accent-color-dark: #6b1c2a !important;
+        --sui-primary-accent-color-text: #8b2e3c !important;
+        --sui-primary-accent-color-inverted: #f7f5f4 !important;
+        --sui-primary-accent-color-translucent: rgb(139 46 60 / 60%) !important;
+        --sui-primary-accent-color-translucent-light: rgb(139 46 60 / 40%) !important;
+        --sui-button-primary-background-color: #8b2e3c !important;
+        --sui-button-primary-background-color-focus: #6b1c2a !important;
+        --sui-button-primary-background-color-active: #551622 !important;
+        --sui-button-link-foreground-color: #8b2e3c !important;
+        --sui-checkbox-background-color-checked: #8b2e3c !important;
+        --sui-focus-ring-color: rgb(139 46 60 / 60%) !important;
+        --sui-font-family-default: "DM Sans", ui-sans-serif, system-ui, sans-serif !important;
+        --sui-heading-font-family: "Outfit", ui-sans-serif, system-ui, sans-serif !important;
+      }
+      :root[data-theme="dark"],
+      :host[data-theme="dark"],
+      html[data-theme="dark"] {
+        --sui-primary-accent-color: #b86f7d !important;
+        --sui-primary-accent-color-light: #d4a8b1 !important;
+        --sui-primary-accent-color-dark: #8b2e3c !important;
+        --sui-primary-accent-color-text: #d4a8b1 !important;
+        --sui-primary-accent-color-translucent: rgb(184 111 125 / 60%) !important;
+        --sui-primary-accent-color-translucent-light: rgb(184 111 125 / 40%) !important;
+        --sui-button-primary-background-color: #8b2e3c !important;
+        --sui-button-primary-background-color-focus: #b86f7d !important;
+        --sui-button-primary-background-color-active: #6b1c2a !important;
+        --sui-button-link-foreground-color: #d4a8b1 !important;
+        --sui-checkbox-background-color-checked: #b86f7d !important;
+        --sui-focus-ring-color: rgb(184 111 125 / 60%) !important;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme]),
+        :host:not([data-theme]),
+        html:not([data-theme]) {
+          --sui-primary-accent-color: #b86f7d !important;
+          --sui-primary-accent-color-light: #d4a8b1 !important;
+          --sui-primary-accent-color-dark: #8b2e3c !important;
+          --sui-primary-accent-color-text: #d4a8b1 !important;
+          --sui-primary-accent-color-translucent: rgb(184 111 125 / 60%) !important;
+          --sui-primary-accent-color-translucent-light: rgb(184 111 125 / 40%) !important;
+          --sui-button-link-foreground-color: #d4a8b1 !important;
+          --sui-checkbox-background-color-checked: #b86f7d !important;
+          --sui-focus-ring-color: rgb(184 111 125 / 60%) !important;
+        }
+      }
+
+      /* Login / entrance branding — wordmark only, tight lockup */
+      .container.svelte-7ua6x9 {
+        background:
+          radial-gradient(
+            ellipse 70% 50% at 50% 8%,
+            rgb(139 46 60 / 22%),
+            transparent 58%
+          );
+      }
+      .container.svelte-7ua6x9 .inner.svelte-7ua6x9 {
+        gap: 1.75rem !important;
+      }
+      /* Placeholder ND favicon — hide on the big login stage */
+      .logo.svelte-7ua6x9 {
+        display: none !important;
+      }
+      h1.svelte-7ua6x9 {
+        font-family: "Outfit", ui-sans-serif, system-ui, sans-serif !important;
+        font-weight: 600 !important;
+        font-size: clamp(2.5rem, 5.5vw, 3.5rem) !important;
+        letter-spacing: -0.02em !important;
+        line-height: 1 !important;
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem !important;
+        margin: 0 !important;
+        color: #f7f5f4 !important;
+        text-align: center;
+      }
+      .logo.svelte-7ua6x9 ~ h1.svelte-7ua6x9 {
+        font-size: clamp(2.5rem, 5.5vw, 3.5rem) !important;
+      }
+      h1.svelte-7ua6x9 .nk-brand-row {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.35rem;
+      }
+      h1.svelte-7ua6x9 .nk-brand-name {
+        font-weight: 600;
+        color: #f7f5f4;
+      }
+      h1.svelte-7ua6x9 .nk-brand-accent {
+        font-size: 0.38em;
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #b86f7d;
+        line-height: 1;
+      }
+      h1.svelte-7ua6x9 .nk-brand-cms {
+        font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+        font-size: 0.28em;
+        font-weight: 500;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgb(247 245 244 / 45%);
+      }
+      .container.svelte-7ua6x9 .message {
+        font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif !important;
+        color: rgb(247 245 244 / 70%) !important;
+        margin-top: 0.25rem !important;
+      }
+      .powered-by.svelte-7ua6x9 {
+        font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif !important;
+        letter-spacing: 0.02em;
+        opacity: 0.85;
+      }
+      .nk-return-home {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0.15rem;
+        padding: 0.2rem 0.15rem;
+        border: none;
+        background: transparent;
+        color: rgb(247 245 244 / 45%);
+        font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+        transition: color 0.15s ease;
+      }
+      .nk-return-home:hover {
+        color: #b86f7d;
+        background: transparent;
+        border: none;
+      }
+    </style>
+    <script>
+      (function applyNeatnikAccent() {
+        var root = document.documentElement;
+        function paint() {
+          root.style.setProperty("--sui-base-hue", "351");
+          var theme = root.getAttribute("data-theme");
+          var dark =
+            theme === "dark" ||
+            (!theme &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          var accent = dark ? "#b86f7d" : "#8b2e3c";
+          var accentText = dark ? "#d4a8b1" : "#8b2e3c";
+          root.style.setProperty("--sui-primary-accent-color", accent);
+          root.style.setProperty("--sui-primary-accent-color-light", "#d4a8b1");
+          root.style.setProperty("--sui-primary-accent-color-dark", "#6b1c2a");
+          root.style.setProperty("--sui-primary-accent-color-text", accentText);
+          root.style.setProperty(
+            "--sui-primary-accent-color-inverted",
+            "#f7f5f4"
+          );
+          root.style.setProperty(
+            "--sui-button-primary-background-color",
+            "#8b2e3c"
+          );
+          root.style.setProperty("--sui-button-link-foreground-color", accentText);
+          root.style.setProperty(
+            "--sui-checkbox-background-color-checked",
+            accent
+          );
+        }
+        paint();
+        new MutationObserver(paint).observe(root, {
+          attributes: true,
+          attributeFilter: ["data-theme", "class"],
+        });
+        window
+          .matchMedia("(prefers-color-scheme: dark)")
+          .addEventListener("change", paint);
+      })();
+
+      /** Login wordmark: Neatnik + Detailing, with a quiet CMS label. */
+      (function brandLoginTitle() {
+        function enhance() {
+          document.querySelectorAll("h1.svelte-7ua6x9").forEach(function (h1) {
+            if (h1.dataset.neatnikBranded === "1") return;
+            var text = (h1.textContent || "").trim();
+            if (
+              text !== "Neatnik" &&
+              text !== "Neatnik Detailing" &&
+              text.indexOf("Neatnik") !== 0
+            ) {
+              return;
+            }
+            h1.dataset.neatnikBranded = "1";
+            h1.innerHTML =
+              '<span class="nk-brand-row">' +
+              '<span class="nk-brand-name">Neatnik</span>' +
+              '<span class="nk-brand-accent">Detailing</span>' +
+              "</span>" +
+              '<span class="nk-brand-cms">CMS</span>';
+          });
+        }
+        enhance();
+        new MutationObserver(enhance).observe(document.body, {
+          childList: true,
+          subtree: true,
+        });
+      })();
+
+      /** “Return to site” under the login sign-in options. */
+      (function addLoginReturnHome() {
+        var homeHref = new URL("../", location.href).href;
+
+        function ensureButton() {
+          var inner = document.querySelector(
+            ".container.svelte-7ua6x9 .inner.svelte-7ua6x9"
+          );
+          if (!inner) return;
+          if (inner.querySelector(".nk-return-home")) return;
+          // Only on the auth entrance (has the branded title).
+          if (!inner.querySelector("h1.svelte-7ua6x9")) return;
+
+          var link = document.createElement("a");
+          link.className = "nk-return-home";
+          link.href = homeHref;
+          link.target = "_self";
+          link.textContent = "Return to site";
+          link.addEventListener("click", function (event) {
+            // Keep navigation in this tab (Sveltia may treat some links specially).
+            event.preventDefault();
+            event.stopPropagation();
+            window.location.assign(homeHref);
+          });
+          inner.appendChild(link);
+        }
+
+        ensureButton();
+        new MutationObserver(ensureButton).observe(document.body, {
+          childList: true,
+          subtree: true,
+        });
+      })();
+    </script>
+    <script>
+      var SITE_ORIGIN = "https://neatnikdetailing.com";
+
+      /** Sveltia getAsset → { url }; Decap used stringifiable proxies. */
+      function assetUrl(asset) {
+        if (!asset) return null;
+        if (typeof asset === "string") return asset;
+        if (typeof asset.url === "string" && asset.url) return asset.url;
+        if (typeof asset.toString === "function") {
+          var s = asset.toString();
+          if (s && s !== "[object Object]") return s;
+        }
+        return null;
+      }
+
+      /**
+       * Resolve preview image URL. Prefer getAsset blob URL; fall back to the
+       * live Pages path for bare filenames next to the entry (published jobs).
+       */
+      function resolveImageSrc(getAsset, entry, path) {
+        if (!path) return null;
+        var pathStr =
+          typeof path === "string"
+            ? path
+            : path && typeof path.toString === "function"
+              ? path.toString()
+              : String(path);
+        if (!pathStr || pathStr === "[object Object]") return null;
+
+        var fromAsset = assetUrl(getAsset ? getAsset(path) : null);
+        if (fromAsset) return fromAsset;
+        fromAsset = assetUrl(getAsset ? getAsset(pathStr) : null);
+        if (fromAsset) return fromAsset;
+
+        // Published bare filename beside info.json → live site URL
+        if (pathStr.indexOf("://") !== -1) return pathStr;
+        var entryPath = (entry && entry.get && entry.get("path")) || "";
+        var dir = String(entryPath).replace(/\/[^/]*$/, "");
+        if (dir && pathStr.indexOf("/") === -1) {
+          return SITE_ORIGIN + "/" + dir + "/" + pathStr;
+        }
+        if (pathStr.charAt(0) === "/") {
+          return SITE_ORIGIN + pathStr;
+        }
+        return SITE_ORIGIN + "/" + pathStr;
+      }
+
+      /**
+       * blob: URLs are bound to the CMS preview document. Convert them to data:
+       * URLs so cms-preview.html (separate origin/context) can display drafts.
+       */
+      function urlForPreviewFrame(url) {
+        return new Promise(function (resolve) {
+          if (!url) {
+            resolve(null);
+            return;
+          }
+          if (String(url).indexOf("blob:") !== 0) {
+            resolve(url);
+            return;
+          }
+          fetch(url)
+            .then(function (r) {
+              return r.blob();
+            })
+            .then(function (blob) {
+              return new Promise(function (res, rej) {
+                var reader = new FileReader();
+                reader.onloadend = function () {
+                  res(reader.result);
+                };
+                reader.onerror = rej;
+                reader.readAsDataURL(blob);
+              });
+            })
+            .then(resolve)
+            .catch(function () {
+              resolve(url);
+            });
+        });
+      }
+
+      /**
+       * Live site modules via cms-preview.html (same React + Tailwind as the site).
+       * Draft data is pushed with postMessage so previews stay in sync with frontend.
+       *
+       * NOTE: Sveltia mounts custom previews inside its own sandboxed iframe (blob URL).
+       * Use an absolute SITE_ORIGIN URL — relative paths resolve against the blob and break.
+       * Callback refs only (React 19 rejects string refs → minified error #284).
+       *
+       * mapDraft(fields, props) may return a plain object or a Promise — use for
+       * gallery/showcase to attach resolved image URLs.
+       */
+      var CMS_PREVIEW_FRAME_SRC = SITE_ORIGIN + "/cms-preview.html";
+
+      function entryDataToJS(entry) {
+        var data = entry.get("data");
+        if (!data) return {};
+        if (typeof data.toJS === "function") return data.toJS();
+        return data;
+      }
+
+      function createSiteModulePreview(kind, mapDraft) {
+        return createClass({
+          componentDidMount: function () {
+            var self = this;
+            this._pushToken = 0;
+            this._retryTimer = null;
+            this._onFrameMessage = function (event) {
+              if (
+                event.data &&
+                event.data.type === "neatnik-cms-preview-ready"
+              ) {
+                self.stopHandshakeRetries();
+                self.pushDraft();
+              }
+            };
+            window.addEventListener("message", this._onFrameMessage);
+            this.startHandshakeRetries();
+          },
+          componentDidUpdate: function () {
+            this.startHandshakeRetries();
+          },
+          componentWillUnmount: function () {
+            if (this._onFrameMessage) {
+              window.removeEventListener("message", this._onFrameMessage);
+            }
+            this.stopHandshakeRetries();
+            this._iframe = null;
+            this._pushToken += 1;
+          },
+          startHandshakeRetries: function () {
+            var self = this;
+            this.stopHandshakeRetries();
+            var attempts = 0;
+            function retry() {
+              if (!self._iframe || !self._iframe.contentWindow) return;
+              self.pushDraft();
+              attempts += 1;
+              if (attempts < 8) {
+                self._retryTimer = window.setTimeout(retry, 250);
+              }
+            }
+            retry();
+          },
+          stopHandshakeRetries: function () {
+            if (this._retryTimer !== null) {
+              window.clearTimeout(this._retryTimer);
+              this._retryTimer = null;
+            }
+          },
+          pushDraft: function () {
+            var self = this;
+            var iframe = this._iframe;
+            if (!iframe || !iframe.contentWindow) return;
+            var token = ++this._pushToken;
+            var fields = entryDataToJS(this.props.entry);
+            var mapped = mapDraft
+              ? mapDraft(fields, this.props)
+              : Promise.resolve(fields);
+
+            Promise.resolve(mapped)
+              .then(function (data) {
+                if (token !== self._pushToken) return;
+                if (!self._iframe || !self._iframe.contentWindow) return;
+                try {
+                  self._iframe.contentWindow.postMessage(
+                    {
+                      type: "neatnik-cms-preview",
+                      kind: kind,
+                      data: data,
+                    },
+                    "*"
+                  );
+                } catch (err) {
+                  // Cross-origin / not ready yet — ignore; onLoad / ready will retry
+                }
+              })
+              .catch(function () {
+                // Mapping failed — skip this push
+              });
+          },
+          render: function () {
+            var self = this;
+            return h("iframe", {
+              // OLD CODE - KEEP UNTIL CONFIRMED WORKING
+              // ref: "previewFrame",  // string refs break React 19 (#284)
+              ref: function (el) {
+                self._iframe = el;
+              },
+              title: "Site preview — " + kind,
+              src: CMS_PREVIEW_FRAME_SRC,
+              onLoad: function () {
+                self.startHandshakeRetries();
+              },
+              style: {
+                display: "block",
+                width: "100%",
+                minHeight: "100vh",
+                height: "100%",
+                border: "none",
+                background: "#0a0a0a",
+              },
+            });
+          },
+        });
+      }
+
+      function mapGalleryDraft(fields, props) {
+        var entry = props.entry;
+        var getAsset = props.getAsset;
+        var before = resolveImageSrc(getAsset, entry, fields.before);
+        var before2 = resolveImageSrc(getAsset, entry, fields.before2);
+        var after = resolveImageSrc(
+          getAsset,
+          entry,
+          fields.image || fields.after
+        );
+        var after2 = resolveImageSrc(getAsset, entry, fields.image2);
+
+        return Promise.all([
+          urlForPreviewFrame(before),
+          urlForPreviewFrame(before2),
+          urlForPreviewFrame(after),
+          urlForPreviewFrame(after2),
+        ]).then(function (urls) {
+          return {
+            slug: entry.get("slug") || "",
+            fields: fields,
+            urls: {
+              before: urls[0],
+              before2: urls[1],
+              after: urls[2],
+              after2: urls[3],
+            },
+          };
+        });
+      }
+
+      function mapShowcaseDraft(fields, props) {
+        var entry = props.entry;
+        var getAsset = props.getAsset;
+        var image = resolveImageSrc(getAsset, entry, fields.image);
+
+        return urlForPreviewFrame(image).then(function (url) {
+          return {
+            slug: entry.get("slug") || "",
+            fields: fields,
+            urls: { image: url },
+          };
+        });
+      }
+
+      function mapHomeDraft(fields, props) {
+        var entry = props.entry;
+        var getAsset = props.getAsset;
+        var hero =
+          fields.hero && typeof fields.hero === "object" ? fields.hero : {};
+        var why =
+          fields.why && typeof fields.why === "object" ? fields.why : {};
+        var heroImg = resolveImageSrc(getAsset, entry, hero.image);
+        var whyImg = resolveImageSrc(getAsset, entry, why.image);
+
+        return Promise.all([
+          urlForPreviewFrame(heroImg),
+          urlForPreviewFrame(whyImg),
+        ]).then(function (urls) {
+          return Object.assign({}, fields, {
+            urls: { heroImage: urls[0], whyImage: urls[1] },
+          });
+        });
+      }
+
+      // OLD CODE - KEEP UNTIL CONFIRMED WORKING
+      // Hand-rolled GalleryPreview / ShowcasePreview (inline HTML/CSS halves).
+      // Replaced by cms-preview.html + GalleryPair / ShowcaseCarousel.
+
+      var GalleryPreview = createSiteModulePreview("gallery", mapGalleryDraft);
+      var ShowcasePreview = createSiteModulePreview(
+        "showcase",
+        mapShowcaseDraft
+      );
+      var ServicesPreview = createSiteModulePreview("services");
+      var AboutPreview = createSiteModulePreview("about");
+      var ContactPreview = createSiteModulePreview("contact");
+      var HomePreview = createSiteModulePreview("home", mapHomeDraft);
+      var GalleryPagePreview = createSiteModulePreview("gallery-page");
+
+      CMS.registerPreviewTemplate("gallery", GalleryPreview);
+      CMS.registerPreviewTemplate("showcase", ShowcasePreview);
+      // File collections look up preview by file name (not collection name).
+      CMS.registerPreviewTemplate("services", ServicesPreview);
+      CMS.registerPreviewTemplate("about", AboutPreview);
+      CMS.registerPreviewTemplate("contact", ContactPreview);
+      CMS.registerPreviewTemplate("home", HomePreview);
+      CMS.registerPreviewTemplate("gallery-page", GalleryPagePreview);
+      CMS.registerPreviewStyle("body { background: #0a0a0a; margin: 0; }", {
+        raw: true,
+      });
+
+      // Keep only one “Most requested” flag when publishing Services page.
+      CMS.registerEventListener({
+        name: "preSave",
+        handler: function (args) {
+          var entry = args.entry;
+          var slug = entry.get("slug") || "";
+          var filePath = entry.get("path") || "";
+          if (
+            slug !== "services" &&
+            String(filePath).indexOf("services.json") === -1
+          ) {
+            return entry;
+          }
+          var packages = entry.getIn(["data", "packages"]);
+          if (!packages || typeof packages.map !== "function") return entry;
+          var keepIndex = -1;
+          packages.forEach(function (pkg, index) {
+            var flagged = pkg && pkg.get && pkg.get("mostRequested") === true;
+            if (flagged && keepIndex < 0) keepIndex = index;
+          });
+          if (keepIndex < 0) return entry;
+          var next = packages.map(function (pkg, index) {
+            if (!pkg || typeof pkg.set !== "function") return pkg;
+            return pkg.set("mostRequested", index === keepIndex);
+          });
+          return entry.setIn(["data", "packages"], next);
+        },
+      });
+    </script>
+  </body>
+</html>

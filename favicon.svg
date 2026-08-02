@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Neatnik Detailing — ND monogram (replaces leftover RF glyph) -->
+  <rect width="32" height="32" rx="6" fill="#1A0508"/>
+  <!-- N -->
+  <path
+    d="M7.5 22V10h2.7l4.1 7.4V10H17v12h-2.7l-4.1-7.4V22H7.5z"
+    fill="#8B2E3C"
+  />
+  <!-- D -->
+  <path
+    d="M18.2 22V10h3.1c3.2 0 5.2 1.9 5.2 6s-2 6-5.2 6h-3.1zm2.8-2.4h.4c1.6 0 2.5-1.1 2.5-3.6s-.9-3.6-2.5-3.6h-.4v7.2z"
+    fill="#8B2E3C"
+  />
+</svg>

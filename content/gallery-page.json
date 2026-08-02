@@ -1,0 +1,22 @@
+{
+  "heroEyebrow": "Gallery",
+  "heroHeadline": "Work that shows",
+  "heroBody": "Glamour shots up top — soapy wash, wet paint, cabin glow. Scroll down for the before & after jobs that prove the process.",
+  "highlightsEyebrow": "Highlights",
+  "highlightsTitle": "General gallery",
+  "highlightsBody": "Standalone shots — no before needed. Pause, swipe, or tap a collage tile to browse.",
+  "jobsEyebrow": "Process",
+  "jobsTitle": "Before & after jobs",
+  "jobsBody": "Real jobs from Neatnik Detailing — filter by interior, exterior, or full detail.",
+  "jobsEmptyBody": "Detailing is visual. Real before-and-after photos are on the way — these placeholders show how the gallery will feel.",
+  "footerPrompt": "Have a vehicle that needs the same treatment?",
+  "footerLinkLabel": "Get a quote",
+  "cta": {
+    "title": "Your before & after starts with a message",
+    "body": "Reach out with your vehicle type and what you’d like done. You’ll get a clear plan and a fair quote — no pressure, no guesswork.",
+    "primaryLabel": "Request a quote",
+    "primaryHref": "/contact",
+    "secondaryLabel": "View packages",
+    "secondaryHref": "/services"
+  }
+}

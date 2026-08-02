@@ -1,0 +1,50 @@
+{
+  "heroHeadline": "Local. Genuine. Obsessed with getting it right.",
+  "bodyTitle": "The Neatnik way",
+  "body": [
+    "Neatnik Detailing is a family-owned detailing brand based in Fairfield, Maine. The work is personal without putting anyone in the spotlight — just careful attention to every vehicle that comes through, treated like it belongs to a neighbor.",
+    "Cutting corners isn’t part of the brand. A job isn’t done until it’s done right: thorough vacuuming, careful product work, a clean finish on the paint, and the little spots most shops rush past.",
+    "Above and beyond isn’t a slogan on a flyer. It’s the standard — stay with the detail until the cabin feels fresh, the exterior looks sharp, and you’d be proud to hand the keys back."
+  ],
+  "glance": [
+    {
+      "label": "Based in",
+      "value": "Fairfield, Maine"
+    },
+    {
+      "label": "Serves",
+      "value": "Fairfield & surrounding Mid-Maine towns"
+    },
+    {
+      "label": "Style",
+      "value": "Family-owned · full attention on every job"
+    },
+    {
+      "label": "Focus",
+      "value": "Interior, exterior & full standard detailing"
+    }
+  ],
+  "expectations": [
+    {
+      "title": "Honest talk",
+      "body": "You’ll hear what’s actually needed — not an upsell script. If a lighter package will do, that’s what gets recommended."
+    },
+    {
+      "title": "Steady work ethic",
+      "body": "Long days aren’t a problem when the finish still has to look right. Pride shows in the details."
+    },
+    {
+      "title": "Neighborly service",
+      "body": "Mid-Maine isn’t anonymous. Reputation matters, and every vehicle is a chance to earn it."
+    }
+  ],
+  "heroEyebrow": "About",
+  "cta": {
+    "title": "Let’s get your vehicle looking right",
+    "body": "Reach out with your vehicle type and what you’d like done. You’ll get a clear plan and a fair quote — no pressure, no guesswork.",
+    "primaryLabel": "Request a quote",
+    "primaryHref": "/contact",
+    "secondaryLabel": "View packages",
+    "secondaryHref": "/services"
+  }
+}

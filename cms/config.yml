@@ -1,0 +1,842 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+# Neatnik CMS — https://neatnikdetailing.com/cms/
+# Auth: Cloudflare Worker (sveltia-cms-auth). Set base_url to your Worker URL.
+# Worker ALLOWED_DOMAINS must include: neatnikdetailing.com (and optionally neatnikdetailing.github.io)
+# Commits into neatnikdetailing/neatnikdetailing (GitHub Pages).
+
+backend:
+  name: github
+  repo: neatnikdetailing/neatnikdetailing
+  branch: main
+  # Cloudflare Worker (auth only): neatnik-cms-auth on ackvyn account.
+  # ALLOWED_DOMAINS on the Worker: neatnikdetailing.com,neatnikdetailing.github.io
+  base_url: https://neatnik-cms-auth.ackvyn.workers.dev
+
+app_title: Neatnik
+site_url: https://neatnikdetailing.com
+display_url: https://neatnikdetailing.com
+# OLD CODE - KEEP UNTIL CONFIRMED WORKING
+# logo_url: https://neatnikdetailing.github.io/neatnikdetailing/favicon.svg
+logo_url: https://neatnikdetailing.com/favicon.svg?v=nd
+logo:
+  src: https://neatnikdetailing.com/favicon.svg?v=nd
+  show_in_header: true
+
+# Default media landing; each collection overrides its own folders.
+media_folder: images/gallery
+public_folder: /images/gallery
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  # ── B&A Gallery (paired before/after photos) ────────────────────────
+  - name: gallery
+    label: B&A Gallery
+    label_singular: B&A job
+    description: >
+      Paired before/after jobs. Order: (1) Title & category, (2) short
+      Before/After captions, (3) upload both photos, (4) sort order, (5) Publish.
+      Folder name comes from the title. Any photo filename is fine.
+    folder: images/gallery
+    path: "{{slug}}/info"
+    extension: json
+    format: json
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: title
+    summary: "#{{order}} · {{title}} — {{category}} · {{afterLabel}}"
+    sortable_fields: ["order", "title", "category"]
+    view_filters:
+      - label: Interior jobs
+        field: category
+        pattern: Interior
+      - label: Exterior jobs
+        field: category
+        pattern: Exterior
+      - label: Full details
+        field: category
+        pattern: Full Detail
+    view_groups:
+      - label: Category
+        field: category
+    # Empty media/public folders → files saved next to info.json and the field
+    # value is a bare filename. The site resolves that via galleryImageSrc, and
+    # the CMS can preview both draft and committed images (absolute paths break preview).
+    media_folder: ""
+    public_folder: ""
+    editor:
+      preview: true
+    fields:
+      - label: Title
+        name: title
+        widget: string
+        hint: "**Shown on the website** under the photos (e.g. Audi A4 — engine bay wipe-down)."
+
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - Interior
+          - Exterior
+          - Full Detail
+        hint: Used by the gallery filter buttons on the site.
+
+      - label: Before caption
+        name: beforeLabel
+        widget: string
+        default: "Before"
+        hint: Short text on the **left** photo (e.g. Heavy dust on covers & plastics).
+
+      - label: After caption
+        name: afterLabel
+        widget: string
+        default: "After"
+        hint: Short text on the **right** photo (e.g. Clean bay, deep black finish).
+
+      - label: Sort order
+        name: order
+        widget: number
+        value_type: int
+        default: 10
+        hint: "**Lower = higher on the page.** Use 1 for the newest/featured job."
+
+      - label: Before photo
+        name: before
+        widget: image
+        choose_url: false
+        media_folder: ""
+        public_folder: ""
+        media_library:
+          config:
+            max_file_size: 1500000
+        hint: >
+          Upload the **dirty / before** shot (primary). Any filename is fine.
+          Prefer JPG/WebP under ~1.5 MB.
+
+      - label: Before photo (2nd)
+        name: before2
+        widget: image
+        required: false
+        choose_url: false
+        media_folder: ""
+        public_folder: ""
+        media_library:
+          config:
+            max_file_size: 1500000
+        hint: >
+          Optional second before shot. On the site the two before photos share
+          one square as a diagonal split (max 2).
+
+      - label: After photo
+        # Field name "image" is used for collection grid thumbnails.
+        name: image
+        widget: image
+        choose_url: false
+        media_folder: ""
+        public_folder: ""
+        media_library:
+          config:
+            max_file_size: 1500000
+        hint: >
+          Upload the **clean / after** shot (primary). Any filename is fine.
+          Prefer JPG/WebP under ~1.5 MB.
+
+      - label: After photo (2nd)
+        name: image2
+        widget: image
+        required: false
+        choose_url: false
+        media_folder: ""
+        public_folder: ""
+        media_library:
+          config:
+            max_file_size: 1500000
+        hint: >
+          Optional second after shot. On the site the two after photos share
+          one square as a diagonal split (max 2).
+
+      - label: Photo framing
+        name: fit
+        widget: object
+        required: false
+        collapsed: true
+        hint: >
+          Optional. Focal point (x/y %), zoom, rotate, and flip for each photo.
+          Flip mirrors pixels only — the diagonal cutout stays the same.
+        fields:
+          - label: Before photo
+            name: before
+            widget: object
+            required: false
+            collapsed: true
+            fields:
+              - label: Focal X %
+                name: x
+                widget: number
+                value_type: float
+                min: 0
+                max: 100
+                step: 1
+                default: 50
+                required: false
+              - label: Focal Y %
+                name: y
+                widget: number
+                value_type: float
+                min: 0
+                max: 100
+                step: 1
+                default: 50
+                required: false
+              - label: Zoom
+                name: z
+                widget: number
+                value_type: float
+                min: 1
+                max: 3
+                step: 0.05
+                default: 1
+                required: false
+              - label: Rotate (degrees)
+                name: r
+                widget: number
+                value_type: int
+                default: 0
+                required: false
+                hint: "Use multiples of 90: 0, 90, -90, or 180."
+              - label: Flip horizontal
+                name: fh
+                widget: boolean
+                default: false
+                required: false
+                hint: Mirrors the photo inside the same diagonal cutout; does not flip the mask.
+
+          - label: Before photo (2nd)
+            name: before2
+            widget: object
+            required: false
+            collapsed: true
+            fields:
+              - label: Focal X %
+                name: x
+                widget: number
+                value_type: float
+                min: 0
+                max: 100
+                step: 1
+                default: 50
+                required: false
+              - label: Focal Y %
+                name: y
+                widget: number
+                value_type: float
+                min: 0
+                max: 100
+                step: 1
+                default: 50
+                required: false
+              - label: Zoom
+                name: z
+                widget: number
+                value_type: float
+                min: 1
+                max: 3
+                step: 0.05
+                default: 1
+                required: false
+              - label: Rotate (degrees)
+                name: r
+                widget: number
+                value_type: int
+                default: 0
+                required: false
+                hint: "Use multiples of 90: 0, 90, -90, or 180."
+              - label: Flip horizontal
+                name: fh
+                widget: boolean
+                default: false
+                required: false
+                hint: Mirrors the photo inside the same diagonal cutout; does not flip the mask.
+
+          - label: After photo
+            name: image
+            widget: object
+            required: false
+            collapsed: true
+            fields:
+              - label: Focal X %
+                name: x
+                widget: number
+                value_type: float
+                min: 0
+                max: 100
+                step: 1
+                default: 50
+                required: false
+              - label: Focal Y %
+                name: y
+                widget: number
+                value_type: float
+                min: 0
+                max: 100
+                step: 1
+                default: 50
+                required: false
+              - label: Zoom
+                name: z
+                widget: number
+                value_type: float
+                min: 1
+                max: 3
+                step: 0.05
+                default: 1
+                required: false
+              - label: Rotate (degrees)
+                name: r
+                widget: number
+                value_type: int
+                default: 0
+                required: false
+                hint: "Use multiples of 90: 0, 90, -90, or 180."
+              - label: Flip horizontal
+                name: fh
+                widget: boolean
+                default: false
+                required: false
+                hint: Mirrors the photo inside the same diagonal cutout; does not flip the mask.
+
+          - label: After photo (2nd)
+            name: image2
+            widget: object
+            required: false
+            collapsed: true
+            fields:
+              - label: Focal X %
+                name: x
+                widget: number
+                value_type: float
+                min: 0
+                max: 100
+                step: 1
+                default: 50
+                required: false
+              - label: Focal Y %
+                name: y
+                widget: number
+                value_type: float
+                min: 0
+                max: 100
+                step: 1
+                default: 50
+                required: false
+              - label: Zoom
+                name: z
+                widget: number
+                value_type: float
+                min: 1
+                max: 3
+                step: 0.05
+                default: 1
+                required: false
+              - label: Rotate (degrees)
+                name: r
+                widget: number
+                value_type: int
+                default: 0
+                required: false
+                hint: "Use multiples of 90: 0, 90, -90, or 180."
+              - label: Flip horizontal
+                name: fh
+                widget: boolean
+                default: false
+                required: false
+                hint: Mirrors the photo inside the same diagonal cutout; does not flip the mask.
+
+  # ── General Gallery (single glamour / showcase shots) ───────────────
+  - name: showcase
+    label: General Gallery
+    label_singular: General photo
+    description: >
+      Single glamour shots — soapy wash, wet paint, cabin glow, etc.
+      No before photo needed. These feed the slideshow + collage at the
+      top of the Gallery page.
+    folder: images/showcase
+    path: "{{slug}}/info"
+    extension: json
+    format: json
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: title
+    summary: "#{{order}} · {{title}}"
+    sortable_fields: ["order", "title"]
+    # Empty media/public folders → bare filename value, previewable in the CMS.
+    media_folder: ""
+    public_folder: ""
+    editor:
+      preview: true
+    fields:
+      - label: Title
+        name: title
+        widget: string
+        hint: Short label on the site (e.g. Black sedan — evening shine).
+
+      - label: Caption
+        name: caption
+        widget: string
+        required: false
+        hint: Optional one-liner under the photo in the slideshow.
+
+      - label: Sort order
+        name: order
+        widget: number
+        value_type: int
+        default: 10
+        hint: "**Lower = earlier in the slideshow.** Use 1 for the featured shot."
+
+      - label: Photo
+        name: image
+        widget: image
+        choose_url: false
+        media_folder: ""
+        public_folder: ""
+        media_library:
+          config:
+            max_file_size: 1500000
+        hint: >
+          One strong photo. Prefer JPG/WebP under ~1.5 MB.
+          Landscape works best for the slideshow.
+
+  # ── Site Settings (page chrome + packages) ──────────────────────────
+  - name: site
+    label: Site Settings
+    editor:
+      preview: true
+    files:
+      - name: home
+        label: Home page
+        file: content/home.json
+        format: json
+        description: >
+          Hero, services intro, Why Neatnik, gallery teaser labels,
+          testimonials, FAQ, and the maroon bottom CTA on the Home page.
+        media_folder: images
+        public_folder: /images
+        fields:
+          - label: Hero
+            name: hero
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Headline, name: headline, widget: string }
+              - { label: Headline accent, name: headlineAccent, widget: string, hint: "Second line (maroon), e.g. Detailing" }
+              - { label: Body, name: body, widget: text }
+              - label: Primary button
+                name: primaryCta
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Path, name: href, widget: string, hint: "e.g. /contact" }
+              - label: Secondary button
+                name: secondaryCta
+                widget: object
+                collapsed: true
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: Path, name: href, widget: string, hint: "e.g. /gallery" }
+              - label: Hero image
+                name: image
+                widget: image
+                choose_url: false
+                media_folder: images
+                public_folder: /images
+                hint: Background photo on the right of the hero.
+
+          - label: Services intro
+            name: servicesIntro
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+              - { label: Footer note, name: footerNote, widget: string }
+              - { label: Link label, name: linkLabel, widget: string }
+
+          - label: Why Neatnik
+            name: why
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+              - label: Bullets
+                name: bullets
+                widget: list
+                collapsed: true
+                minimize_collapsed: true
+                hint: One bullet per line (plain string list).
+              - { label: Link label, name: linkLabel, widget: string }
+              - { label: Link path, name: linkHref, widget: string, hint: "e.g. /about" }
+              - label: Image
+                name: image
+                widget: image
+                choose_url: false
+                media_folder: images
+                public_folder: /images
+
+          - label: Gallery teaser
+            name: galleryTeaser
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Eyebrow, name: eyebrow, widget: string }
+              - { label: Title, name: title, widget: string }
+              - { label: Link label, name: linkLabel, widget: string }
+
+          - { label: Testimonials eyebrow, name: testimonialsEyebrow, widget: string }
+          - { label: Testimonials title, name: testimonialsTitle, widget: string }
+          - label: Testimonials
+            name: testimonials
+            widget: list
+            collapsed: true
+            minimize_collapsed: true
+            summary: "{{fields.name}} — {{fields.area}}"
+            fields:
+              - { label: Quote, name: quote, widget: text }
+              - { label: Name, name: name, widget: string }
+              - { label: Area, name: area, widget: string }
+
+          - { label: FAQ title, name: faqTitle, widget: string }
+          - label: FAQ
+            name: faq
+            widget: list
+            collapsed: true
+            minimize_collapsed: true
+            summary: "{{fields.q}}"
+            fields:
+              - { label: Question, name: q, widget: string }
+              - { label: Answer, name: a, widget: text }
+
+          - label: Bottom CTA
+            name: cta
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+              - { label: Primary button label, name: primaryLabel, widget: string }
+              - { label: Primary button path, name: primaryHref, widget: string, hint: "e.g. /contact" }
+              - { label: Secondary button label, name: secondaryLabel, widget: string }
+              - { label: Secondary button path, name: secondaryHref, widget: string, hint: "e.g. /services" }
+
+      - name: contact
+        label: Contact & locations
+        file: content/contact.json
+        format: json
+        description: >
+          Phone, email, base location, towns served, and Contact page hero copy.
+        fields:
+          - label: Email
+            name: email
+            widget: string
+            hint: Form submissions and mailto links.
+
+          - label: Phone (display)
+            name: phoneDisplay
+            widget: string
+            hint: "Shown on the site, e.g. (207) 660-1512"
+
+          - label: Phone (tel link)
+            name: phoneTel
+            widget: string
+            hint: "E.164 for click-to-call, e.g. +12076601512"
+
+          - label: Location
+            name: location
+            widget: string
+            hint: Short home base (e.g. Fairfield, Maine).
+
+          - label: Service area towns
+            name: serviceAreas
+            widget: list
+            collapsed: true
+            minimize_collapsed: true
+            hint: >
+              One town per line. Matches the string list already stored in
+              content/contact.json.
+
+          - label: Footer area blurb
+            name: footerAreasBlurb
+            widget: text
+            hint: One sentence under Get in touch in the footer.
+
+          - label: Hero eyebrow
+            name: heroEyebrow
+            widget: string
+
+          - label: Hero headline
+            name: heroHeadline
+            widget: string
+
+          - label: Hero body
+            name: heroBody
+            widget: text
+
+          - label: Hero headline (package attached)
+            name: heroHeadlineAttached
+            widget: string
+            hint: "Use {package} for the package name, e.g. Book {package}"
+
+          - label: Hero body (package attached)
+            name: heroBodyAttached
+            widget: text
+
+      - name: about
+        label: About page
+        file: content/about.json
+        format: json
+        description: >
+          About page hero, story, At a glance, What you can expect, and bottom CTA.
+        fields:
+          - label: Hero eyebrow
+            name: heroEyebrow
+            widget: string
+
+          - label: Hero headline
+            name: heroHeadline
+            widget: string
+
+          - label: Body section title
+            name: bodyTitle
+            widget: string
+            default: The Neatnik way
+
+          - label: Body paragraphs
+            name: body
+            widget: list
+            collapsed: true
+            minimize_collapsed: true
+            hint: One paragraph per line (plain string list).
+
+          - label: At a glance
+            name: glance
+            widget: list
+            collapsed: true
+            minimize_collapsed: true
+            summary: "{{fields.label}} — {{fields.value}}"
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: Value, name: value, widget: string }
+
+          - label: What you can expect
+            name: expectations
+            widget: list
+            collapsed: true
+            minimize_collapsed: true
+            summary: "{{fields.title}}"
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+
+          - label: Bottom CTA
+            name: cta
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+              - { label: Primary button label, name: primaryLabel, widget: string }
+              - { label: Primary button path, name: primaryHref, widget: string }
+              - { label: Secondary button label, name: secondaryLabel, widget: string }
+              - { label: Secondary button path, name: secondaryHref, widget: string }
+
+      - name: services
+        label: Services page
+        file: content/services.json
+        format: json
+        description: >
+          Services page hero, bottom CTA, packages, and add-ons. Package id is
+          used in booking links (e.g. interior → /contact?package=interior).
+        fields:
+          - label: Hero eyebrow
+            name: heroEyebrow
+            widget: string
+
+          - label: Hero headline
+            name: heroHeadline
+            widget: string
+
+          - label: Hero body
+            name: heroBody
+            widget: text
+
+          - label: Bottom CTA
+            name: cta
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+              - { label: Primary button label, name: primaryLabel, widget: string }
+              - { label: Primary button path, name: primaryHref, widget: string }
+              - { label: Secondary button label, name: secondaryLabel, widget: string }
+              - { label: Secondary button path, name: secondaryHref, widget: string }
+
+          - label: Packages
+            name: packages
+            widget: list
+            collapsed: true
+            minimize_collapsed: true
+            summary: "{{fields.title}} · {{fields.startingAt}}"
+            hint: >
+              Drag the ↑↓ handles to set display order — top of the list is
+              first on the Services page.
+            fields:
+              - label: Booking id
+                name: id
+                widget: string
+                hint: >
+                  Stable URL id — keep as interior / exterior / full unless you
+                  intentionally change booking links.
+
+              - label: Title
+                name: title
+                widget: string
+                hint: Package name on cards (e.g. Interior Refresh).
+
+              - label: Tagline
+                name: tagline
+                widget: string
+
+              - label: Description
+                name: description
+                widget: text
+
+              - label: Includes
+                name: includes
+                widget: list
+                collapsed: true
+                minimize_collapsed: true
+                hint: One included item per line (plain string list).
+
+              - label: Starting at
+                name: startingAt
+                widget: string
+                hint: "Display price, e.g. $120"
+
+              - label: Duration
+                name: duration
+                widget: string
+                hint: "e.g. 2–3 hrs"
+
+              - label: Most requested
+                name: mostRequested
+                widget: boolean
+                default: false
+                hint: >
+                  “Most requested” badge on this card. Only one package should
+                  be on — if several are, the topmost wins (extras are cleared
+                  on publish).
+
+          - label: Add-ons
+            name: addons
+            widget: list
+            collapsed: true
+            minimize_collapsed: true
+            summary: "{{fields.title}}"
+            hint: >
+              Drag the ↑↓ handles to set display order — top of the list is
+              first on the Services page.
+            fields:
+              - label: Id
+                name: id
+                widget: string
+                hint: Stable slug (e.g. headlight-restoration).
+
+              - label: Title
+                name: title
+                widget: string
+
+              - label: Detail
+                name: detail
+                widget: text
+
+      - name: gallery-page
+        label: Gallery page
+        file: content/gallery-page.json
+        format: json
+        description: >
+          Gallery page hero, Highlights / B&A section labels, footer prompt,
+          and maroon bottom CTA. Photo entries stay under B&A / General Gallery.
+        fields:
+          - label: Hero eyebrow
+            name: heroEyebrow
+            widget: string
+
+          - label: Hero headline
+            name: heroHeadline
+            widget: string
+
+          - label: Hero body
+            name: heroBody
+            widget: text
+
+          - label: Highlights eyebrow
+            name: highlightsEyebrow
+            widget: string
+
+          - label: Highlights title
+            name: highlightsTitle
+            widget: string
+
+          - label: Highlights body
+            name: highlightsBody
+            widget: text
+
+          - label: Jobs eyebrow
+            name: jobsEyebrow
+            widget: string
+
+          - label: Jobs title
+            name: jobsTitle
+            widget: string
+
+          - label: Jobs body (with photos)
+            name: jobsBody
+            widget: text
+
+          - label: Jobs body (empty / placeholders)
+            name: jobsEmptyBody
+            widget: text
+
+          - label: Footer prompt
+            name: footerPrompt
+            widget: string
+
+          - label: Footer link label
+            name: footerLinkLabel
+            widget: string
+
+          - label: Bottom CTA
+            name: cta
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Body, name: body, widget: text }
+              - { label: Primary button label, name: primaryLabel, widget: string }
+              - { label: Primary button path, name: primaryHref, widget: string }
+              - { label: Secondary button label, name: secondaryLabel, widget: string }
+              - { label: Secondary button path, name: secondaryHref, widget: string }
+
+  # OLD CODE - KEEP UNTIL CONFIRMED WORKING
+  # Separate Service packages / Service add-ons file collections removed —
+  # everything lives under Site settings → Services page (content/services.json).
