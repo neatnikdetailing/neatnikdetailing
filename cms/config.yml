@@ -10,7 +10,7 @@ backend:
   branch: main
   # Cloudflare Worker (auth only): neatnik-cms-auth on ackvyn account.
   # ALLOWED_DOMAINS on the Worker: neatnikdetailing.com,neatnikdetailing.github.io
-  base_url: https://neatnik-cms-auth.ackvyn.workers.dev
+  base_url: https://neatnik-cms-auth.neatnikdetailing.workers.dev
 
 app_title: Neatnik
 site_url: https://neatnikdetailing.com
